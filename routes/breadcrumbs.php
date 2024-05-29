@@ -51,3 +51,13 @@ Breadcrumbs::for('user-management.permissions.index', function (BreadcrumbTrail 
     $trail->parent('user-management.index');
     $trail->push('Permissions', route('user-management.permissions.index'));
 });
+
+// Home > Dashboard > User
+Breadcrumbs::for('user.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push('User', route('user.index'));
+});
+Breadcrumbs::for('user.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push('User', route('user.index'));
+});

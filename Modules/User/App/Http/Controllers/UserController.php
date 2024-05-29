@@ -13,13 +13,10 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    // public function index()
-    // {
-    //     return view('user::index');
-    // }
+
     public function index(UsersDataTable $dataTable)
     {
-        return $dataTable->render('pages/apps.user-management.users.list');
+        return $dataTable->render('user::index');
     }
     /**
      * Show the form for creating a new resource.

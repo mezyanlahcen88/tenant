@@ -27,7 +27,7 @@
                 <!--begin::Toolbar-->
                 <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
                     <!--begin::Add user-->
-                    <a class="btn btn-primary">
+                    <a class="btn btn-primary" href="{{route('user.create')}}">
                         {!! getIcon('plus', 'fs-2', '', 'i') !!}
                         Add User
                     </a>
