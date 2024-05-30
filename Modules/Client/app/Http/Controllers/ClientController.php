@@ -1,35 +1,34 @@
 <?php
 
-namespace Modules\User\App\Http\Controllers;
+namespace Modules\Client\app\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use App\DataTables\UsersDataTable;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
-class UserController extends Controller
+class ClientController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-
-    public function index(UsersDataTable $dataTable)
+    public function index()
     {
-        return $dataTable->render('user::index');
+        return view('client::index');
     }
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        return view('user::create');
+        return view('client::create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         //
     }
@@ -39,7 +38,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return view('user::show');
+        return view('client::show');
     }
 
     /**
@@ -47,7 +46,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        return view('user::edit');
+        return view('client::edit');
     }
 
     /**
