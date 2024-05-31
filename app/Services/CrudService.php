@@ -20,12 +20,12 @@ class CrudService
 
             foreach ($files as $file) {
                 if($request->hasFile($file)){
-                    dealWithPicture($request, $record, $file, $file, $folder, 'store');
+                    dealWithPicture($request, $record, $file, $concatName, $folder, 'store');
                 }
             }
 
         $record->save();
-        // return true;
+        return true;
     }
 
     public function updateRecord($record, $request, array $fillables, array $files, $concatName, $folder)

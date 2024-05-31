@@ -1,33 +1,33 @@
 <?php
 
-namespace Modules\{{model}}\app\Http\Controllers;
+namespace Modules\Client\app\Http\Controllers;
 
 use App\Enums\StaticOptions;
 use Illuminate\Http\Request;
 use App\Services\CrudService;
-use App\Http\Requests\Store{{model}}Request;
+use App\Http\Requests\StoreClientRequest;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Validation\ValidationException;
-use Modules\Client\app\Models\{{model}};
+use Modules\Client\app\Models\Client;
 use App\Http\Controllers\Controller;
 
 
 
-class {{class}} extends Controller
+class ClientController extends Controller
 {
 
     public $staticOptions;
     public $crudService;
     public function __construct(CrudService $crudService, StaticOptions $staticOptions)
     {
-        $this->middleware('permission:{{lower}}-list|{{lower}}-create|{{lower}}-edit|{{lower}}-show|{{lower}}-delete', ['only' => ['index']]);
-        $this->middleware('permission:{{lower}}-create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:{{lower}}-edit', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:{{lower}}-show', ['only' => ['show']]);
-        $this->middleware('permission:{{lower}}-delete', ['only' => ['destroy']]);
-        $this->middleware('permission:{{lower}}-restore', ['only' => ['restore']]);
-        $this->middleware('permission:{{lower}}-trashed', ['only' => ['trashed']]);
-        $this->middleware('permission:{{lower}}-forse-delete', ['only' => ['forseDelete']]);
+        $this->middleware('permission:client-list|client-create|client-edit|client-show|client-delete', ['only' => ['index']]);
+        $this->middleware('permission:client-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:client-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:client-show', ['only' => ['show']]);
+        $this->middleware('permission:client-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:client-restore', ['only' => ['restore']]);
+        $this->middleware('permission:client-trashed', ['only' => ['trashed']]);
+        $this->middleware('permission:client-forse-delete', ['only' => ['forseDelete']]);
         $this->staticOptions = $staticOptions;
         $this->crudService = $crudService;
     }
@@ -40,9 +40,9 @@ class {{class}} extends Controller
     public function index()
     {
 
-        $tableRows =(new {{model}}())->getRowsTable();
-        $objects = {{model}}::get();
-        return view('{{plural}}.index',compact('tableRows','objects'));
+        $tableRows =(new Client())->getRowsTable();
+        $objects = Client::get();
+        return view('clients.index',compact('tableRows','objects'));
     }
     /**
      * Display a list of soft-deleted records.
@@ -51,9 +51,9 @@ class {{class}} extends Controller
      */
     public function trashed(Request $request)
     {
-        $objects = {{model}}::onlyTrashed()->get();
-        $tableRows =(new {{model}}())->getRowsTableTrashed();
-        return view('{{plural}}.trashedIndex', compact('tableRows','objects'));
+        $objects = Client::onlyTrashed()->get();
+        $tableRows =(new Client())->getRowsTableTrashed();
+        return view('clients.trashedIndex', compact('tableRows','objects'));
     }
 
     /**
@@ -63,7 +63,7 @@ class {{class}} extends Controller
      */
     public function create()
     {
-       return view('{{plural}}.create');
+       return view('clients.create');
 
     }
 
@@ -73,15 +73,15 @@ class {{class}} extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Store{{model}}Request $request, {{model}} $model)
+    public function store(StoreClientRequest $request, Client $model)
     {
         try {
             $validated = $request->validated();
-            $this->crudService->storeRecord($model, $request, $model->getFillable(), $model->getFiles(), '{{lower}}', '{{plural}}');
+            $this->crudService->storeRecord($model, $request, $model->getFillable(), $model->getFiles(), 'client', 'clients');
 
-            return redirect()->route('{{plural}}.index');
+            return redirect()->route('clients.index');
              } catch (ValidationException $e) {
-            return redirect()->route('{{plural}}.create')->withErrors($e->validator)->withInput();
+            return redirect()->route('clients.create')->withErrors($e->validator)->withInput();
         }
     }
 
@@ -89,43 +89,43 @@ class {{class}} extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\{{model}}  ${{lower}}
+     * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $object = {{lower}}::findOrfail($id);
-        return view('{{plural}}.edit',compact('object'));
+        $object = client::findOrfail($id);
+        return view('clients.edit',compact('object'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\{{model}}  ${{lower}}
+     * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function update(Store{{model}}Request $request,$id)
+    public function update(StoreClientRequest $request,$id)
     {
         try {
             $validated = $request->validated();
-             $object = {{model}}::findOrFail($id);
-            $this->crudService->updateRecord($object, $request, $object->getFillable(), $object->getFiles(), '{{lower}}', '{{plural}}');
+             $object = Client::findOrFail($id);
+            $this->crudService->updateRecord($object, $request, $object->getFillable(), $object->getFiles(), 'client', 'clients');
 
-            return redirect()->route('{{plural}}.index');
+            return redirect()->route('clients.index');
             } catch (ValidationException $e) {
-            return redirect()->route('{{plural}}.edit')->withErrors($e->validator)->withInput();
+            return redirect()->route('clients.edit')->withErrors($e->validator)->withInput();
         }
     }
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\{{model}}  ${{lower}}
+     * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request)
     {
-      $object = {{model}}::findOrFail($request->id)->delete();
+      $object = Client::findOrFail($request->id)->delete();
 
     }
 
@@ -139,9 +139,9 @@ class {{class}} extends Controller
     public function restore(Request $request, $id)
     {
 
-        $object = {{model}}::withTrashed()->findOrFail($id)->restore();
+        $object = Client::withTrashed()->findOrFail($id)->restore();
         // storeSidebar();
-        return redirect()->route('{{plural}}.index');
+        return redirect()->route('clients.index');
     }
 
     /**
@@ -154,8 +154,8 @@ class {{class}} extends Controller
     public function forceDelete(Request $request, $id)
     {
 
-        $object = {{model}}::withTrashed()->findOrFail($id);
-        // deletePicture($object,'{{plural}}','picture');
+        $object = Client::withTrashed()->findOrFail($id);
+        // deletePicture($object,'clients','picture');
         $object->forceDelete();
         // storeSidebar();
     }
@@ -169,10 +169,10 @@ class {{class}} extends Controller
     public function changeStatus(Request $request)
     {
         $id = $request->id;
-        $object = {{model}}::findOrFail($id);
+        $object = Client::findOrFail($id);
         $object->active = !$object->active;
         $object->save();
-        $message = $object->active ? trans('translation.{{lower}}_message_activated') : trans('translation.{{lower}}_message_inactivated');
+        $message = $object->active ? trans('translation.client_message_activated') : trans('translation.client_message_inactivated');
         return response()->json(['code' => 200, 'active' => $object->active, 'message' => $message]);
     }
 }

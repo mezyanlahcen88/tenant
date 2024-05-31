@@ -7,8 +7,9 @@
     @section('breadcrumbs')
         {{ Breadcrumbs::render('user.create') }}
     @endsection
-    <form action="{{route('user.store')}}" method="post" enctype="multipart/form-data">
+    <form action="{{route('user.update',$object->uuid)}}" method="post" enctype="multipart/form-data">
         @csrf
+        @method('PUT')
     <div class="row">
         <div class="col-md-9">
             <div class="card card-bordered">
@@ -27,6 +28,7 @@
                                     id=""
                                     aria-describedby="helpId"
                                     placeholder="Enter the name"
+                                    value="{{$object->name}}"
                                 />
                             </div>
 
@@ -34,15 +36,12 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="" class="form-label">Email</label>
-                                <input type="email" class="form-control" name="email" placeholder="name@example.com" autocomplete="email">
+                                <input type="email" class="form-control" name="email" placeholder="name@example.com"
+                                value="{{$object->email}}"
+                                autocomplete="email">
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="" class="form-label">Password</label>
-                                <input type="password" class="form-control" name="password" placeholder="**********" autocomplete="password">
-                            </div>
-                        </div>
+
                     </div>
                 </div>
 
@@ -56,7 +55,7 @@
 
                 </div>
                 <div class="card-body">
-                    {{-- <div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url(/assets/media/svg/avatars/blank.svg)">
+                    <div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url(/assets/media/svg/avatars/blank.svg)">
                         <!--begin::Image preview wrapper-->
                         <div class="image-input-wrapper w-125px h-125px" style="background-image: url(/assets/media/avatars/300-1.jpg)"></div>
                         <!--end::Image preview wrapper-->
@@ -95,8 +94,8 @@
                             <i class="ki-outline ki-cross fs-3"></i>
                         </span>
                         <!--end::Remove button-->
-                    </div> --}}
-                    <input type="file" name="avatar" id="">
+                    </div>
+                    {{-- <input type="file" name="avatar" id=""> --}}
                     <!--end::Image input-->
                 </div>
 
