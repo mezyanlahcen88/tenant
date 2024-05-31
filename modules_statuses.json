@@ -1,5 +1,3 @@
 {
-    "User": true,
-    "Client": true,
-    "Person": true
+    "User": true
 }

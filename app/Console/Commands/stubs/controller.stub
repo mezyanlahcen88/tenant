@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Modules\{{model}}\app\Http\Controllers;
 
-use App\Models\{{model}};
 use App\Enums\StaticOptions;
 use Illuminate\Http\Request;
 use App\Services\CrudService;
 use App\Http\Requests\Store{{model}}Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Validation\ValidationException;
+use Modules\Client\app\Models\{{model}};
 
 
 
@@ -39,7 +39,7 @@ class {{class}} extends Controller
     public function index()
     {
 
-           $tableRows =(new {{model}}())->getRowsTable();
+        $tableRows =(new {{model}}())->getRowsTable();
         $objects = {{model}}::get();
         return view('{{plural}}.index',compact('tableRows','objects'));
     }

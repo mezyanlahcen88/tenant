@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\File;
 
 class advancedControllerCommand extends Command
 {
-    protected $signature = 'make:ctl {name : The name of the controller class}';
+    protected $signature = 'make:module-controller {name : The name of the controller class}';
 
     protected $description = 'Create a new Advaced controller class';
 
@@ -26,9 +26,9 @@ class advancedControllerCommand extends Command
         $stub = str_replace('{{model}}', $modelName, $stub);
         $stub = str_replace('{{lower}}', $lowerName, $stub);
         $stub = str_replace('{{plural}}', $pluralName, $stub);
-
-        $filePath = app_path('Http/Controllers/' . $className. '.php');
-
+// Generate a unique factory file name
+     $filename = $name . 'Controller.php';
+        $filePath = base_path('Modules/'.$modelName.'/App/Http/Controllers/' . $filename);
         if (File::exists($filePath)) {
             $this->error('Controller class already exists!');
             return;
