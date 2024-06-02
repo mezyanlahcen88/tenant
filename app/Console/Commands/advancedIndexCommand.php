@@ -19,9 +19,11 @@ class advancedIndexCommand extends Command
         $name = $this->argument('name');
         $lowerName = strtolower($name);
         $plural = Str::plural($lowerName);
-
-        // Create the directory first
-        $directoryPath = resource_path("views/{$plural}");
+        $modelName = ucfirst($name);
+        // delete folder views
+        $directoryPath = base_path('Modules/'.$modelName.'/resources/views');
+        File::deleteDirectory($directoryPath);
+        // // Create the directory first
         File::makeDirectory($directoryPath, 0755, true);
 
         // Get the content of the stub file

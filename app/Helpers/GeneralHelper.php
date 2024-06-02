@@ -73,8 +73,8 @@ if (!function_exists('getLangName')) {
 if (!function_exists('storeTranslaionToLang')) {
     function storeTranslaionToLang()
     {
-        // $locale = App::getLocale();
-        $locale = 'fr';
+        $locale = App::getLocale();
+        // $locale = 'en';
         $id = getLangId($locale);
         $objects = LanguageTranslate::where('language_id', $id)->pluck('translation', 'label');
         Storage::disk('lang')->delete($locale . '.json');

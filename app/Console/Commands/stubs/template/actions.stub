@@ -1,17 +1,17 @@
-
-    <div class="d-flex justify-content-center gap-2">
-        @can('{{lowerName}}-edit')
+<div class="d-flex justify-content-center gap-2">
+      {{-- @endcan --}}
+        {{-- @can('{{lowerName}}-edit') --}}
             <div class="edit">
-                <a href="{{ route('{{plural}}.edit', $object->id)}}" title="Edit"><span class="badge  text-bg-info"><i class="las la-edit"></i></span></a>
+                <a href="{{ route('{{lowerName}}.edit', $object->uuid)}}" title="Edit"><span class="badge  badge-primary"><i class="las la-edit text-white"></i></span></a>
                 </a>
             </div>
-        @endcan
-        @can('{{lowerName}}-delete')
+        {{-- @endcan --}}
+        {{-- @can('{{lowerName}}-delete') --}}
             <div class="remove">
                 <a href="#" class="remove-item-btn" data-bs-toggle="modal"
-                data-id="{{ $object->id }}" data-route-name="{{ route('{{plural}}.destroy', 'delete') }}">
-              <span class="badge  text-bg-danger"><i class="las la-trash"></i></span></a>
+                data-id="{{ $object->uuid }}" data-route-name="{{ route('{{lowerName}}.destroy', 'delete') }}">
+              <span class="badge  badge-danger"><i class="las la-trash text-white"></i></span></a>
             </div>
-        @endcan
-    </div>
+        {{-- @endcan --}}
+</div>
 

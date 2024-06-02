@@ -19,9 +19,9 @@ class advancedTrashedActionsCommand extends Command
         $name = $this->argument('name');
         $lowerName = strtolower($name);
         $plural = Str::plural($lowerName);
-
-        // Create the directory first
-        $directoryPath = resource_path("views/{$plural}");
+        $modelName = ucfirst($name);
+        // get the directory first
+        $directoryPath = base_path('Modules/'.$modelName.'/resources/views');
 
         // Get the content of the stub file
         $stub = File::get(app_path('Console/Commands/stubs/template/trashedActions.stub'));

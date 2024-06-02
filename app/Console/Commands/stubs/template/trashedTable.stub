@@ -1,39 +1,36 @@
-<div class="card-body">
-    <table id="scroll-horizontal" class="table nowrap align-middle table-hover table-bordered"  style="width:100%">
-                <thead class="table-light">
-                    <tr class="text-center">
-                        <th>{{ trans('translation.{{lowerName}}_table_picture') }}</th>
-                        @foreach ($tableRows as $key => $value)
-                            <th>{{ trans('translation.'.$model.'_table_' . $value) }} </th>
-                        @endforeach
-                        <th class="sort" data-sort="action">{{ trans('translation.general_general_action') }}
-                        </th>
-                    </tr>
-                </thead>
-                <tbody class="list form-check-all">
-                    @foreach ($objects as $object)
-                        <tr class="text-center">
-                            <td class="email">
-                                <div class="d-flex gap-2 align-items-center">
-                                    <div class="flex-shrink-0">
-                                        <img src="{{ getPicture($object->picture,'{{plural}}') }}" alt="" class="avatar-xs rounded-circle">
-                                    </div>
-                                </div>
-                            </td>
-                                @foreach ($tableRows as $key => $value)
-                                 <td> {{ $object->$key }}</td>
-                            @endforeach
-
-                            <td>
-                                    @include('components.softDeleteActions',[
-                                    'restoreRoute'=>'{{plural}}.restore',
-                                    'forceDeleteRoute'=>'{{plural}}.forceDelete',
-                                    'restorePermission'=>'{{lowerName}}-restore',
-                                    'forceDeletePermission'=>'{{lowerName}}-forse-delete',
-                                ])
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-</div>
+<table class="table align-middle border rounded table-row-dashed fs-6 px-2 py-0" id="kt_datatable_example">
+    <thead>
+        <!--begin::Table row-->
+        <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase">
+            <th>{{ trans('translation.bank_table_picture') }}</th>
+            @foreach ($tableRows as $key => $value)
+                <th>{{ trans('translation.' . $model . '_table_' . $value) }} </th>
+            @endforeach
+            <th class="sort" data-sort="action">{{ trans('translation.general_general_action') }}
+            </th>
+        </tr>
+        <!--end::Table row-->
+    </thead>
+    <tbody class="fw-semibold text-gray-600 p-1">
+        @foreach ($objects as $object)
+            <tr class="text-center">
+                <td>
+                    <div class="symbol symbol-40px symbol-circle">
+                        <img src="{{ URL::asset(getPicture($object->avatar, '{{lowerName}}s')) }}" alt="image">
+                    </div>
+                </td>
+                @foreach ($tableRows as $key => $value)
+                    <td> {{ $object->$key }}</td>
+                @endforeach
+                <td>
+                    @include('components.softDeleteActions',[
+                        'restoreRoute'=>'{{lowerName}}.restore',
+                        'forceDeleteRoute'=>'{{lowerName}}.forceDelete',
+                        'restorePermission'=>'{{lowerName}}-restore',
+                        'forceDeletePermission'=>'{{lowerName}}-forse-delete',
+                    ])
+                </td>
+            </tr>
+        @endforeach
+    </tbody>
+</table>

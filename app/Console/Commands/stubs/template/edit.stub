@@ -1,78 +1,95 @@
-@extends('layouts.main_layout')
-@section('title')
-    {{ env('APP_NAME') }} | {{ trans('translation.{{lowerName}}_form_manage_{{plural}}') }} | {{ trans('translation.{{lowerName}}_action_add') }}
-@stop
-@section('css')
-    @include('layouts.includes.form_css')
-@endsection
-@section('page-header')
-    @include('components.new_breadcrumb', [
-        'title' => trans('translation.{{lowerName}}_form_manage_{{plural}}'),
-        'subtitle' => trans('translation.{{lowerName}}_action_add'),
-        'route' => route('{{plural}}.index'),
-        'text' => trans('translation.{{lowerName}}_form_{{plural}}_list'),
-        'permission' => '{{lowerName}}-list',
-        'icon' => 'lab la-stack-exchange',
-    ])
-@endsection
-@section('content')
-    <form action="{{route('{{plural}}.update',$object->id)}}" method="post" id="userForm" enctype="multipart/form-data">
-                @csrf
-                @method('PUT')
-                <div class="col-9">
-                    <div class="card card-body">
-                            <div class="row">
-                                @include('form.input', [
-                                    'cols' => 'col-md-6',
-                                    'column' => 'first_name',
-                                    'model' => 'user',
-                                    'optional' => 'text-danger',
-                                    'input_type' => 'text',
-                                    'class_name' => '',
-                                    'column_id' => 'first_name',
-                                    'column_value' => $object->first_name,
-                                    'readonly' => 'false',
-                                ])
-                        @include('form.singleSelect', [
-                            'cols' => 'col-md-12 ',
-                            'column' => 'roles_name',
-                            'isReload' => false,
-                            'label' => 'user_form_roles_name',
-                            'optional' => 'text-danger',
-                            'divID' => 'roles_name',
-                            'options' => [],
-                            'object' => $object,
-                        ])
-                            </div>
+<x-default-layout>
+    @section('breadcrumb')
+        @include('components.breadcrumb-list', [
+            'title' => trans('translation.{{lowerName}}_action_add'),
+            'listPermission' => '{{lowerName}}-list',
+            'listRoute' => route('{{lowerName}}.index'),
+            'listText' => trans('translation.{{lowerName}}_form_{{plural}}_list'),
+        ])
+    @endsection
+    <form action="{{ route('{{lowerName}}.update', $object->uuid) }}" method="post" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
+        <div class="row">
+            <div class="col-md-9">
+                <div class="card card-bordered">
+                    <div class="card-header">
+                        <h3 class="card-title">Title</h3>
                     </div>
-                </div>
-                <div class="col-3">
-                    <div class="card card-body">
-                        <div class="profile-user position-relative d-inline-block mx-auto  mb-4">
-                            <img src="{{getPicture($object->picture,'{{plural}}')}}"
-                                class="  rounded-circle avatar-xl img-thumbnail user-profile-image"
-                                alt="user-profile-image">
-                            <div class="avatar-xs p-0 rounded-circle profile-photo-edit">
-                                <input id="profile-img-file-input" type="file" class="profile-img-file-input" name="picture">
-                                <label for="profile-img-file-input" class="profile-photo-edit avatar-xs">
-                                    <span class="avatar-title rounded-circle bg-light text-body">
-                                        <i class="ri-camera-fill"></i>
-                                    </span>
-                                </label>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Name</label>
+                                    <input type="text" class="form-control" name="name" id=""
+                                        aria-describedby="helpId" placeholder="Enter the name"
+                                        value="{{ $object->name }}" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Email</label>
+                                    <input type="email" class="form-control" name="email"
+                                        placeholder="name@example.com" value="{{ $object->email }}"
+                                        autocomplete="email">
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-        <div class="col-lg-12">
-            <div class="text-start">
-                <button type="submit" class="btn btn-primary">{{ trans('translation.general_general_update') }}</button>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">picture</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="image-input image-input-outline" data-kt-image-input="true"
+                            style="background-image: url(/assets/media/svg/avatars/blank.svg)">
+                            <!--begin::Image preview wrapper-->
+                            <div class="image-input-wrapper w-125px h-125px"
+                                style="background-image: url(/assets/media/avatars/300-1.jpg)"></div>
+                            <!--end::Image preview wrapper-->
+                            <!--begin::Edit button-->
+                            <label
+                                class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body"
+                                data-kt-image-input-action="change" data-bs-toggle="tooltip" data-bs-dismiss="click"
+                                title="Change avatar">
+                                <i class="ki-duotone ki-pencil fs-6"><span class="path1"></span><span
+                                        class="path2"></span></i>
+                                <!--begin::Inputs-->
+                                <input type="file" name="avatar" accept=".png, .jpg, .jpeg" />
+                                <input type="hidden" name="avatar_remove" />
+                                <!--end::Inputs-->
+                            </label>
+                            <!--end::Edit button-->
+                            <!--begin::Cancel button-->
+                            <span
+                                class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow"
+                                data-kt-image-input-action="cancel" data-bs-toggle="tooltip" data-bs-dismiss="click"
+                                title="Cancel avatar">
+                                <i class="ki-outline ki-cross fs-3"></i>
+                            </span>
+                            <!--end::Cancel button-->
+                            <!--begin::Remove button-->
+                            <span
+                                class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow"
+                                data-kt-image-input-action="remove" data-bs-toggle="tooltip" data-bs-dismiss="click"
+                                title="Remove avatar">
+                                <i class="ki-outline ki-cross fs-3"></i>
+                            </span>
+                            <!--end::Remove button-->
+                        </div>
+                        {{-- <input type="file" name="avatar" id=""> --}}
+                        <!--end::Image input-->
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 mt-3">
+                <button type="submit" class="btn btn-primary ">Save</button>
             </div>
         </div>
     </form>
-    </div>
-@endsection
-@section('js')
-    @include('layouts.includes.form_js')
-    <script src="{{ asset('assets/custom_js/validate_number.js') }}"></script>
-    {!! JsValidator::formRequest('App\Http\Requests\Store{{model}}Request') !!}
-@endsection
+    @push('scripts')
+    @endpush
+</x-default-layout>

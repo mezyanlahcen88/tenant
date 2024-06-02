@@ -41,54 +41,58 @@ class moduleCommand extends Command
 
 
 
-        // // Generate the advanced controller
-        // Artisan::call('make:ctl', [
-        //     'name' => "{$name}",
-        // ]);
+        // Generate the advanced controller
+        Artisan::call('make:module-controller', [
+            'name' => "{$name}",
+        ]);
 
-        // // view section
-        // // Generate the advanced index
-        // Artisan::call('make:index', [
-        //     'name' => "{$name}",
-        // ]);
-        // // Generate the advanced create
-        // Artisan::call('make:create', [
-        //     'name' => "{$name}",
-        // ]);
-        // // Generate the advanced edit
-        // Artisan::call('make:edit', [
-        //     'name' => "{$name}",
-        // ]);
-        // // Generate the advanced trashed index
-        // Artisan::call('make:trashedindex', [
-        //     'name' => "{$name}",
-        // ]);
-        // // Generate the advanced action
-        // Artisan::call('make:actions', [
-        //     'name' => "{$name}",
-        // ]);
-        // // Generate the advanced trashed action
-        // Artisan::call('make:tactions', [
-        //     'name' => "{$name}",
-        // ]);
-        // // Generate the advanced trashed table
-        // Artisan::call('make:trashedTable', [
-        //     'name' => "{$name}",
-        // ]);
-        // // Generate the advanced  table
-        // Artisan::call('make:table', [
-        //     'name' => "{$name}",
-        // ]);
-
-        // // Generate the advanced form request
-        // Artisan::call('make:formRequest', [
-        //     'name' => "{$name}",
-        // ]);
-        // // Route section
-        // // Generate the advanced route
-        // Artisan::call('make:route', [
-        //     'name' => "{$name}",
-        // ]);
-        $this->info('Module  created successfully!');
+        // ###################### view section ######################
+        // Generate the advanced index
+        Artisan::call('make:index', [
+            'name' => "{$name}",
+        ]);
+        // Generate the advanced create
+        Artisan::call('make:create', [
+            'name' => "{$name}",
+        ]);
+        // Generate the advanced edit
+        Artisan::call('make:edit', [
+            'name' => "{$name}",
+        ]);
+        // Generate the advanced trashed index
+        Artisan::call('make:trashedindex', [
+            'name' => "{$name}",
+        ]);
+        // Generate the advanced action
+        Artisan::call('make:actions', [
+            'name' => "{$name}",
+        ]);
+        // Generate the advanced trashed action
+        Artisan::call('make:tactions', [
+            'name' => "{$name}",
+        ]);
+        // Generate the advanced trashed table
+        Artisan::call('make:trashedTable', [
+            'name' => "{$name}",
+        ]);
+        // Generate the advanced  table
+        Artisan::call('make:table', [
+            'name' => "{$name}",
+        ]);
+        // ###################### Validation section ######################
+        // Generate the advanced form request
+        Artisan::call('make:module-storeRequest', [
+            'name' => "{$name}",
+        ]);
+        Artisan::call('make:module-updateRequest', [
+            'name' => "{$name}",
+        ]);
+        // ###################### Route section ######################
+        // Generate the advanced route
+        Artisan::call('make:module-route', [
+            'name' => "{$name}",
+        ]);
+        // ###################### Message section ######################
+        $this->info('Module created successfully!');
     }
 }

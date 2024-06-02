@@ -35,7 +35,10 @@ return [
             'root' => storage_path('app'),
             'throw' => false,
         ],
-
+        'lang' => [
+            'driver' => 'local',
+            'root' => base_path('resources/lang'),
+        ],
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

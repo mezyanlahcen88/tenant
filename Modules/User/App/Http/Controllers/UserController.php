@@ -11,11 +11,8 @@ use Illuminate\Validation\ValidationException;
 use Modules\User\app\Models\User;
 use App\Http\Controllers\Controller;
 
-
-
 class UserController extends Controller
 {
-
     public $staticOptions;
     public $crudService;
     public function __construct(CrudService $crudService, StaticOptions $staticOptions)
@@ -39,10 +36,9 @@ class UserController extends Controller
      */
     public function index()
     {
-
-        $tableRows =(new User())->getRowsTable();
+        $tableRows = (new User())->getRowsTable();
         $objects = User::get();
-        return view('user::index',compact('tableRows','objects'));
+        return view('user::index', compact('tableRows', 'objects'));
     }
     /**
      * Display a list of soft-deleted records.
@@ -52,8 +48,8 @@ class UserController extends Controller
     public function trashed(Request $request)
     {
         $objects = User::onlyTrashed()->get();
-        $tableRows =(new User())->getRowsTableTrashed();
-        return view('user::trashedIndex', compact('tableRows','objects'));
+        $tableRows = (new User())->getRowsTableTrashed();
+        return view('user::trashedIndex', compact('tableRows', 'objects'));
     }
 
     /**
@@ -63,8 +59,7 @@ class UserController extends Controller
      */
     public function create()
     {
-       return view('user::create');
-
+        return view('user::create');
     }
 
     /**
@@ -75,16 +70,19 @@ class UserController extends Controller
      */
     public function store(Request $request, User $model)
     {
+        // dd($request->all());
         try {
             // $validated = $request->validated();
             $this->crudService->storeRecord($model, $request, $model->getFillable(), $model->getFiles(), 'user', 'users');
 
             return redirect()->route('user.index');
-             } catch (ValidationException $e) {
-            return redirect()->route('user.create')->withErrors($e->validator)->withInput();
+        } catch (ValidationException $e) {
+            return redirect()
+                ->route('user.create')
+                ->withErrors($e->validator)
+                ->withInput();
         }
     }
-
 
     /**
      * Show the form for editing the specified resource.
@@ -94,8 +92,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $object = user::where('uuid',$id)->first();
-        return view('user::edit',compact('object'));
+        $object = user::where('uuid', $id)->first();
+        return view('user::edit', compact('object'));
     }
 
     /**
@@ -105,16 +103,19 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
         try {
             // $validated = $request->validated();
-             $object = User::where('uuid',$id)->first();
+            $object = User::where('uuid', $id)->first();
             $this->crudService->updateRecord($object, $request, $object->getFillable(), $object->getFiles(), 'user', 'users');
 
             return redirect()->route('user.index');
-            } catch (ValidationException $e) {
-            return redirect()->route('user.edit')->withErrors($e->validator)->withInput();
+        } catch (ValidationException $e) {
+            return redirect()
+                ->route('user.edit')
+                ->withErrors($e->validator)
+                ->withInput();
         }
     }
     /**
@@ -125,11 +126,10 @@ class UserController extends Controller
      */
     public function destroy(Request $request)
     {
-     User::findOrFail($request->id)->delete();
-
+        User::where('uuid',$request->id)->delete();
     }
 
-            /**
+    /**
      * Restore a soft-deleted user.
      *
      * @param \Illuminate\Http\Request $request The HTTP request object.
@@ -152,7 +152,7 @@ class UserController extends Controller
     public function forceDelete($id)
     {
         $object = User::withTrashed()->findOrFail($id);
-        deletePicture($object,'users','picture');
+        deletePicture($object, 'users', 'picture');
         $object->forceDelete();
     }
 

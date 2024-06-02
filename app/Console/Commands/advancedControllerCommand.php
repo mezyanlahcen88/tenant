@@ -26,6 +26,13 @@ class advancedControllerCommand extends Command
         $stub = str_replace('{{model}}', $modelName, $stub);
         $stub = str_replace('{{lower}}', $lowerName, $stub);
         $stub = str_replace('{{plural}}', $pluralName, $stub);
+
+                // delete folder controllers
+                $directoryPath = base_path('Modules/'.$modelName.'/App/Http/Controllers');
+                File::deleteDirectory($directoryPath);
+                // // Create the directory first
+
+                File::makeDirectory($directoryPath, 0755, true);
 // Generate a unique factory file name
      $filename = $name . 'Controller.php';
         $filePath = base_path('Modules/'.$modelName.'/App/Http/Controllers/' . $filename);

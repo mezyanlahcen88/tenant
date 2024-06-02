@@ -20,14 +20,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<int, string>
      */
     protected $fillable = [
-        'uuid',
-        'name',
-        'email',
-        'password',
-        'last_login_at',
-        'last_login_ip',
-        'profile_photo_path',
-        'avatar'
+
     ];
 
     /**
@@ -47,25 +40,8 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'last_login_at' => 'datetime',
+        'roles_name' => 'array',
     ];
 
-    public function getProfilePhotoUrlAttribute()
-    {
-        if ($this->profile_photo_path) {
-            return asset('storage/' . $this->profile_photo_path);
-        }
 
-        return $this->profile_photo_path;
-    }
-
-    public function addresses()
-    {
-        return $this->hasMany(Address::class);
-    }
-
-    public function getDefaultAddressAttribute()
-    {
-        return $this->addresses?->first();
-    }
 }

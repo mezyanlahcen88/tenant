@@ -118,14 +118,14 @@ return [
             'factory' => ['path' => 'database/factories', 'generate' => true],
             'model' => ['path' => 'app/Models', 'generate' => true],
             'observer' => ['path' => 'app/Observers', 'generate' => false],
-            'routes' => ['path' => 'routes', 'generate' => true],
+            'routes' => ['path' => 'routes', 'generate' => false],
             'controller' => ['path' => 'app/Http/Controllers', 'generate' => true],
             'filter' => ['path' => 'app/Http/Middleware', 'generate' => true],
             'request' => ['path' => 'app/Http/Requests', 'generate' => true],
             'provider' => ['path' => 'app/Providers', 'generate' => true],
             'assets' => ['path' => 'resources/assets', 'generate' => true],
             'lang' => ['path' => 'lang', 'generate' => true],
-            'views' => ['path' => 'resources/views', 'generate' => true],
+            'views' => ['path' => 'resources/views', 'generate' => false],
             'test' => ['path' => 'tests/Unit', 'generate' => true],
             'test-feature' => ['path' => 'tests/Feature', 'generate' => true],
             'repository' => ['path' => 'app/Repositories', 'generate' => false],
@@ -151,10 +151,10 @@ return [
     | application. You can add your own commands to merge section.
     |
     */
-    // 'commands' => ConsoleServiceProvider::defaultCommands()
-    //     ->merge([
-    //         // New commands go here
-    //     ])->toArray(),
+    'commands' => ConsoleServiceProvider::defaultCommands()
+        ->merge([
+            // New commands go here
+        ])->toArray(),
 
     /*
     |--------------------------------------------------------------------------

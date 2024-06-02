@@ -35,7 +35,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::get('/error', function () {
     abort(500);
 });
-
+Route::get('/translate', function () {
+    storeTranslaionToLang();
+});
 Route::get('/auth/redirect/{provider}', [SocialiteController::class, 'redirect']);
 
 require __DIR__ . '/auth.php';

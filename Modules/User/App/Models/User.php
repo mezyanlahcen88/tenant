@@ -38,7 +38,9 @@ class User extends Model
     public function getRowsTable()
     {
         return [
-            'name' => 'name',
+            'first_name' => 'first_name',
+            'last_name' => 'last_name',
+            'username' => 'username',
             'email' => 'email',
         ];
     }
@@ -51,7 +53,9 @@ class User extends Model
     public function getRowsTableTrashed()
     {
         return [
-            'name' => 'name',
+            'first_name' => 'first_name',
+            'last_name' => 'last_name',
+            'username' => 'username',
             'email' => 'email',
         ];
     }

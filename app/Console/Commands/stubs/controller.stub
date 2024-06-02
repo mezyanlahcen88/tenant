@@ -5,7 +5,8 @@ namespace Modules\{{model}}\app\Http\Controllers;
 use App\Enums\StaticOptions;
 use Illuminate\Http\Request;
 use App\Services\CrudService;
-use App\Http\Requests\Store{{model}}Request;
+use Modules\{{model}}\app\Http\Requests\Store{{model}}Request;
+use Modules\{{model}}\app\Http\Requests\Update{{model}}Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Validation\ValidationException;
 use Modules\Client\app\Models\{{model}};
@@ -42,7 +43,7 @@ class {{class}} extends Controller
 
         $tableRows =(new {{model}}())->getRowsTable();
         $objects = {{model}}::get();
-        return view('{{plural}}.index',compact('tableRows','objects'));
+        return view('{{lower}}::index',compact('tableRows','objects'));
     }
     /**
      * Display a list of soft-deleted records.
@@ -53,7 +54,7 @@ class {{class}} extends Controller
     {
         $objects = {{model}}::onlyTrashed()->get();
         $tableRows =(new {{model}}())->getRowsTableTrashed();
-        return view('{{plural}}.trashedIndex', compact('tableRows','objects'));
+        return view('{{lower}}::trashedIndex', compact('tableRows','objects'));
     }
 
     /**
@@ -63,7 +64,7 @@ class {{class}} extends Controller
      */
     public function create()
     {
-       return view('{{plural}}.create');
+       return view('{{lower}}::create');
 
     }
 
@@ -81,7 +82,7 @@ class {{class}} extends Controller
 
             return redirect()->route('{{plural}}.index');
              } catch (ValidationException $e) {
-            return redirect()->route('{{plural}}.create')->withErrors($e->validator)->withInput();
+            return redirect()->route('{{lower}}::create')->withErrors($e->validator)->withInput();
         }
     }
 
@@ -105,7 +106,7 @@ class {{class}} extends Controller
      * @param  \App\Models\{{model}}  ${{lower}}
      * @return \Illuminate\Http\Response
      */
-    public function update(Store{{model}}Request $request,$id)
+    public function update(Update{{model}}Request $request,$id)
     {
         try {
             $validated = $request->validated();
@@ -114,7 +115,7 @@ class {{class}} extends Controller
 
             return redirect()->route('{{plural}}.index');
             } catch (ValidationException $e) {
-            return redirect()->route('{{plural}}.edit')->withErrors($e->validator)->withInput();
+            return redirect()->route('{{lower}}::edit')->withErrors($e->validator)->withInput();
         }
     }
     /**
@@ -140,8 +141,8 @@ class {{class}} extends Controller
     {
 
         $object = {{model}}::withTrashed()->findOrFail($id)->restore();
-        // storeSidebar();
-        return redirect()->route('{{plural}}.index');
+
+        return redirect()->route('{{lower}}::index');
     }
 
     /**
@@ -157,7 +158,7 @@ class {{class}} extends Controller
         $object = {{model}}::withTrashed()->findOrFail($id);
         // deletePicture($object,'{{plural}}','picture');
         $object->forceDelete();
-        // storeSidebar();
+
     }
 
     /**
